@@ -1,0 +1,115 @@
+" Use :help xxx to check how the details of xxx
+
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+call plug#begin()
+" Plug '~/.fzf'
+" enable fzf and automatically download the latest version of the binary
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'preservim/nerdtree'
+call plug#end()
+
+set nocompatible  " Make Vim not Vi-compatible and behave in a more useful way
+
+" Disable arrow keys
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+
+set hidden " Allow modified buffer to be hidden and not displayed
+
+set noswapfile " Not to create a swpfile for a new buffer 
+
+set backspace=start,eol,indent " Ensure backspace to delete everything in the insert mode including automatically inserted indentation...
+
+" Turn on absolute line numbers
+set number  
+" Turn on relative line numbering mode.
+set relativenumber
+
+set hlsearch " Highlight search terms
+set incsearch " Show search matches as you are typing
+
+set splitbelow splitright " Splits and Tabbed Files
+
+filetype plugin on " Enable loading the plugin files for specific file types
+filetype indent on " Enable loading the indent files for specific file types
+
+syntax on " Enable syntax highlighting
+
+" Show the full path of file at the bottom
+set laststatus=2
+set statusline+=%F
+
+" Use <CTRL>+j/k/h/l to switch panes
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+set path=.,**        " use :find to search files in the directory of the current file and all the directories traversing downward the current working directory
+
+" Traverse Vim's buffer lists
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+
+" Search for visually selected text
+" https://vim.fandom.com/wiki/Search_for_visually_selected_text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+" load skeletons
+augroup templates
+  au!
+  " read in template files
+  autocmd BufNewFile *.* silent! execute '0r $HOME/.vim/templates/skeleton.'.expand("<afile>:e")
+augroup END
+
+" enable auto-saving, add CursorHoldI to make it work while insert mode is active
+set updatetime=100
+autocmd CursorHold * update
+
+" Search for the current selection for visual mode
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+function! s:VSetSearch()
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+    let @s = temp
+endfunction
+
+
+" switch between paste and nopaste modes
+set pastetoggle=<F10>
+
+" execute ctags
+:nnoremap <F5> :!ctags -R<CR>
+
+" =====NERDTree setups=====
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+" Start NERDTree when Vim starts with a directory argument and put focus on NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | wincmd p | endif
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
