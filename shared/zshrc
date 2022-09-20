@@ -1,0 +1,21 @@
+
+
+# setup fzf for fuzzy search
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+
+# zsh tab completion on a empty line
+# expand-or-complete-or-list-files
+function expand-or-complete-or-list-files() {
+    if [[ $#BUFFER == 0 ]]; then
+        BUFFER="ls "
+        CURSOR=3
+        zle list-choices
+        zle backward-kill-word
+    else
+        zle expand-or-complete
+    fi
+}
+zle -N expand-or-complete-or-list-files
+# bind to tab
+bindkey '^I' expand-or-complete-or-list-files

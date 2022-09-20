@@ -1,0 +1,81 @@
+" Use :help xxx to check how the details of xxx
+
+set nocompatible  " Make Vim not Vi-compatible and behave in a more useful way
+
+" Disable arrow keys
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+
+set hidden " Allow modified buffer to be hidden and not displayed
+
+set noswapfile " Not to create a swpfile for a new buffer 
+
+set backspace=start,eol,indent " Ensure backspace to delete everything in the insert mode including automatically inserted indentation...
+
+" Turn on absolute line numbers
+set number  
+" Turn on relative line numbering mode.
+set relativenumber
+
+set hlsearch " Highlight search terms
+set incsearch " Show search matches as you are typing
+
+set splitbelow splitright " Splits and Tabbed Files
+
+filetype plugin on " Enable loading the plugin files for specific file types
+filetype indent on " Enable loading the indent files for specific file types
+
+syntax on " Enable syntax highlighting
+
+" Show the full path of file at the bottom
+set laststatus=2
+set statusline+=%F
+
+" Use <CTRL>+j/k/h/l to switch panes
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+set path=.,**        " use :find to search files in the directory of the current file and all the directories traversing downward the current working directory
+
+" Traverse Vim's buffer lists
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+
+" Search for visually selected text
+" https://vim.fandom.com/wiki/Search_for_visually_selected_text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+" load skeletons
+augroup templates
+  au!
+  " read in template files
+  autocmd BufNewFile *.* silent! execute '0r $HOME/.vim/templates/skeleton.'.expand("<afile>:e")
+augroup END
+
+" enable auto-saving, add CursorHoldI to make it work while insert mode is active
+set updatetime=100
+autocmd CursorHold * update
+
+" Search for the current selection for visual mode
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+function! s:VSetSearch()
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+    let @s = temp
+endfunction
+
+" switch between paste and nopaste modes
+set pastetoggle=<F10>
+

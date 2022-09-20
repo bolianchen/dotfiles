@@ -1,0 +1,7 @@
+# run nvidia-smi
+alias ns="nvidia-smi"
+
+# log on to remote machines
+alias zimdy="ssh -L 16012:127.0.0.1:6012 -L 16013:127.0.0.1:6013 -L 16014:127.0.0.1:6014 zimdytsai@211.23.178.200"
+alias bryan="ssh -L 6006:127.0.0.1:6006 -L 6007:127.0.0.1:6007 bryanchen@10.5.57.91"
+alias ray="ssh via@10.5.56.237"
