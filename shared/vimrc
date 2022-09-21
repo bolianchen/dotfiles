@@ -76,6 +76,16 @@ function! s:VSetSearch()
     let @s = temp
 endfunction
 
+" Resolve the issue that not able to navigating from a netrw menu 
+augroup netrw_mapping
+  autocmd!
+  autocmd filetype netrw call NetrwMapping()
+augroup END
+
+function! NetrwMapping()
+  nnoremap <buffer> <C-l> <C-W>l
+endfunction
+
 " switch between paste and nopaste modes
 set pastetoggle=<F10>
 
