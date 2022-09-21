@@ -98,6 +98,7 @@ call plug#begin()
 " Plug '~/.fzf'
 " enable fzf and automatically download the latest version of the binary
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
 call plug#end()
 " ===== Plugins setups end=====
