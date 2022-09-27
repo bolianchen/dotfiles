@@ -1,4 +1,8 @@
 
+# Aliases Definition
+if [ -f ~/.dotfiles/shared/sh_aliases ]; then
+    . ~/.dotfiles/shared/sh_aliases
+fi
 
 # setup fzf for fuzzy search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
