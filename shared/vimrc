@@ -92,6 +92,11 @@ set pastetoggle=<F10>
 " execute ctags
 :nnoremap <F5> :!ctags -R<CR>
 
+" swap grep with ack for :grep
+set grepprg=ack\ --nogroup\ --column\ $*
+set grepformat=%f:%l:%c:%m
+
+
 " ========== Plugins setups start==========
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
