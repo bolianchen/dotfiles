@@ -4,6 +4,10 @@ if [ -f ~/.dotfiles/shared/sh_aliases ]; then
     . ~/.dotfiles/shared/sh_aliases
 fi
 
+if [ "$(uname)" = "Darwin" ]; then
+    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+fi
+
 # setup fzf for fuzzy search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat --style=numbers --color=always --line-range :500 {}'"
@@ -24,3 +28,6 @@ function expand-or-complete-or-list-files() {
 zle -N expand-or-complete-or-list-files
 # bind to tab
 bindkey '^I' expand-or-complete-or-list-files
+
+# unset less to disable oh-my-zsh executing less with -R flag
+unset LESS;
