@@ -45,6 +45,15 @@ map <C-l> <C-W>l
 
 set path=.,**        " use :find to search files in the directory of the current file and all the directories traversing downward the current working directory
 
+" map the <Leader> string from a backslash to ,
+let mapleader = ","
+
+" ========== mappings using <Leader> start ==========
+" open vimrc in a new tab
+nmap <leader>v :tabedit $MYVIMRC<CR>
+
+" ========== mappings using <Leader> start ==========
+
 " Traverse Vim's buffer lists
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
@@ -62,18 +71,22 @@ augroup templates
   autocmd BufNewFile *.* silent! execute '0r $HOME/.vim/templates/skeleton.'.expand("<afile>:e")
 augroup END
 
+
 " enable auto-saving, add CursorHoldI to make it work while insert mode is active
 set updatetime=100
 autocmd CursorHold * update
+
+" enable auto-sourcing vimrc, replace BufWritePost with CursorHold since it is not triggered by auto-saving
+autocmd! BufWritePost $MYVIMRC source $MYVIMRC | echom "Reloaded vimrc"
 
 " Search for the current selection for visual mode
 xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
 function! s:VSetSearch()
-    let temp = @s
-    norm! gv"sy
-    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
-    let @s = temp
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+  let @s = temp
 endfunction
 
 " Resolve the issue that not able to navigating from a netrw menu 
@@ -81,7 +94,6 @@ augroup netrw_mapping
   autocmd!
   autocmd filetype netrw call NetrwMapping()
 augroup END
-
 function! NetrwMapping()
   nnoremap <buffer> <C-l> <C-W>l
 endfunction
@@ -119,6 +131,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'nelstrom/vim-visual-star-search'
 call plug#end()
 " ===== Plugins setups end=====
 
