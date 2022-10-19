@@ -109,7 +109,9 @@ set grepprg=ack\ --nogroup\ --column\ $*
 set grepformat=%f:%l:%c:%m
 
 " explicitly define Alt(Option)+s as the chars sent by pressing the keys
-execute "set <M-s>=\es"
+if !has('nvim')
+    execute "set <M-s>=\es"
+endif
 
 " ========== Plugins setups start==========
 " Install vim-plug if not found
@@ -130,6 +132,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
 Plug 'iamcco/mathjax-support-for-mkdp'
+" manually execution of :call mkdp#util#install() to avoid post-update hook error is required
+" check https://github.com/iamcco/markdown-preview.nvim/issues/497
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'nelstrom/vim-visual-star-search'
 call plug#end()
@@ -150,4 +154,3 @@ nmap <C-s> <Plug>MarkdownPreview
 nmap <M-s> <Plug>MarkdownPreviewStop
 nmap <C-p> <Plug>MarkdownPreviewToggle
 " =====Markdown Preview for (Neo)vim setups end=====
-
