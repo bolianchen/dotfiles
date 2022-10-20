@@ -136,6 +136,7 @@ Plug 'iamcco/mathjax-support-for-mkdp'
 " check https://github.com/iamcco/markdown-preview.nvim/issues/497
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'tpope/vim-surround'
 call plug#end()
 " ===== Plugins setups end=====
 
@@ -153,4 +154,7 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 nmap <C-s> <Plug>MarkdownPreview
 nmap <M-s> <Plug>MarkdownPreviewStop
 nmap <C-p> <Plug>MarkdownPreviewToggle
+" dark or light
+let g:mkdp_theme = 'dark'
+
 " =====Markdown Preview for (Neo)vim setups end=====
