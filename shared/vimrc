@@ -28,6 +28,8 @@ set incsearch " Show search matches as you are typing
 
 set splitbelow splitright " Splits and Tabbed Files
 
+set clipboard^=unnamed,unnamedplus " let yank also update Clipboard("+) and Selection("*) registers
+
 filetype plugin on " Enable loading the plugin files for specific file types
 filetype indent on " Enable loading the indent files for specific file types
 
@@ -98,12 +100,6 @@ function! NetrwMapping()
   nnoremap <buffer> <C-l> <C-W>l
 endfunction
 
-" switch between paste and nopaste modes
-set pastetoggle=<F10>
-
-" execute ctags
-:nnoremap <F5> :!ctags -R<CR>
-
 " swap grep with ack for :grep
 set grepprg=ack\ --nogroup\ --column\ $*
 set grepformat=%f:%l:%c:%m
@@ -137,6 +133,7 @@ Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'tpope/vim-surround'
+Plug 'preservim/tagbar'
 call plug#end()
 " ===== Plugins setups end=====
 
@@ -156,5 +153,15 @@ nmap <M-s> <Plug>MarkdownPreviewStop
 nmap <C-p> <Plug>MarkdownPreviewToggle
 " dark or light
 let g:mkdp_theme = 'dark'
-
 " =====Markdown Preview for (Neo)vim setups end=====
+
+" ===== F Keys mapping starts =====
+" execute ctags
+nmap <F5> :!ctags -R<CR>
+
+" Toggle the Tagbar window
+nmap <F8> :TagbarToggle<CR>
+
+" switch between paste and nopaste modes
+set pastetoggle=<F10>
+" ===== F Keys mapping ends =====
