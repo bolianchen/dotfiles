@@ -134,6 +134,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'tpope/vim-surround'
 Plug 'preservim/tagbar'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 " ===== Plugins setups end=====
 
