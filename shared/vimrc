@@ -13,27 +13,19 @@ inoremap <Up> <Nop>
 inoremap <Down> <Nop>
 
 set hidden " Allow modified buffer to be hidden and not displayed
-
 set noswapfile " Not to create a swpfile for a new buffer 
-
 set backspace=start,eol,indent " Ensure backspace to delete everything in the insert mode including automatically inserted indentation...
-
-" Turn on absolute line numbers
-set number  
-" Turn on relative line numbering mode.
-set relativenumber
-
+set number " Turn on absolute line numbers
+set relativenumber " Turn on relative line numbering mode.
+set ignorecase smartcase
 set hlsearch " Highlight search terms
 set incsearch " Show search matches as you are typing
-
 set splitbelow splitright " Splits and Tabbed Files
-
 set clipboard^=unnamed,unnamedplus " let yank also update Clipboard("+) and Selection("*) registers
-
+set cursorline " highlight current line
+syntax on " Enable syntax highlighting
 filetype plugin on " Enable loading the plugin files for specific file types
 filetype indent on " Enable loading the indent files for specific file types
-
-syntax on " Enable syntax highlighting
 
 " Show the full path of file at the bottom
 set laststatus=2
@@ -45,7 +37,7 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-set path=.,**        " use :find to search files in the directory of the current file and all the directories traversing downward the current working directory
+set path=.,** " use :find to search files in the directory of the current file and all the directories traversing downward the current working directory
 
 " map the <Leader> string from a backslash to ,
 let mapleader = ","
@@ -53,7 +45,6 @@ let mapleader = ","
 " ========== mappings using <Leader> start ==========
 " open vimrc in a new tab
 nmap <leader>v :tabedit $MYVIMRC<CR>
-
 " ========== mappings using <Leader> start ==========
 
 " Traverse Vim's buffer lists
@@ -72,7 +63,6 @@ augroup templates
   " read in template files
   autocmd BufNewFile *.* silent! execute '0r $HOME/.vim/templates/skeleton.'.expand("<afile>:e")
 augroup END
-
 
 " enable auto-saving, add CursorHoldI to make it work while insert mode is active
 set updatetime=100
@@ -135,6 +125,7 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'tpope/vim-surround'
 Plug 'preservim/tagbar'
 Plug 'tpope/vim-fugitive'
+Plug 'slim-template/vim-slim' " syntax highlighting
 call plug#end()
 " ===== Plugins setups end=====
 
@@ -147,22 +138,27 @@ nnoremap <C-f> :NERDTreeFind<CR>
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 " =====NERDTree setups end=====
 
+" =====fzf.vim setups start=====
+let g:fzf_preview_window = ['right,70%', 'ctrl-/']
+let g:fzf_layout = {'window': {'width':1, 'height': 0.4, 'yoffset': 1, 'border': 'horizontal'}}
+" customize :Files
+command! -bang -nargs=? -complete=dir Files
+			\ call fzf#vim#files(<q-args>,
+                        \ {'window': {'width':1, 'height': 0.3, 'yoffset': 1, 'border': 'horizontal'},
+                        \ 'options': ['--preview-window=right,70%:hidden', '--bind=ctrl-/:toggle-preview', '--layout=default', '--info=inline']}, <bang>0)
+nmap <C-p> :Files<CR>
+nmap <C-S-f> :Ag<CR>
+" =====fzf.vim setups end=====
 
 " =====Markdown Preview for (Neo)vim setups start=====
 nmap <C-s> <Plug>MarkdownPreview
 nmap <M-s> <Plug>MarkdownPreviewStop
-nmap <C-p> <Plug>MarkdownPreviewToggle
 " dark or light
 let g:mkdp_theme = 'dark'
 " =====Markdown Preview for (Neo)vim setups end=====
 
 " ===== F Keys mapping starts =====
-" execute ctags
-nmap <F5> :!ctags -R<CR>
-
-" Toggle the Tagbar window
-nmap <F8> :TagbarToggle<CR>
-
-" switch between paste and nopaste modes
-set pastetoggle=<F10>
+nmap <F5> :!ctags -R<CR> " execute ctags
+nmap <F8> :TagbarToggle<CR> " Toggle the Tagbar window
+set pastetoggle=<F10> " switch between paste and nopaste modes
 " ===== F Keys mapping ends =====
