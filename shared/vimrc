@@ -1,6 +1,7 @@
 " Use :help xxx to check how the details of xxx
 
 set nocompatible  " Make Vim not Vi-compatible and behave in a more useful way
+set encoding=utf-8
 
 " Disable arrow keys
 noremap <Left> <Nop>
@@ -126,6 +127,9 @@ Plug 'tpope/vim-surround'
 Plug 'preservim/tagbar'
 Plug 'tpope/vim-fugitive'
 Plug 'slim-template/vim-slim' " syntax highlighting
+" status bar setup
+Plug 'vim-airline/vim-airline' 
+Plug 'vim-airline/vim-airline-themes' 
 call plug#end()
 " ===== Plugins setups end=====
 
@@ -162,3 +166,6 @@ nmap <F5> :!ctags -R<CR> " execute ctags
 nmap <F8> :TagbarToggle<CR> " Toggle the Tagbar window
 set pastetoggle=<F10> " switch between paste and nopaste modes
 " ===== F Keys mapping ends =====
+
+" set vim-airline theme
+let g:airline_theme='simple'
