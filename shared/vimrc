@@ -44,7 +44,6 @@ let mapleader = ","
 
 " ========== mappings using <Leader> start ==========
 " open vimrc in a new tab
-nmap <leader>f :Rg<CR>
 nmap <leader>v :tabedit $MYVIMRC<CR>
 nmap <leader>x :xa<CR>
 
@@ -147,9 +146,7 @@ call plug#end()
 
 " =====NERDTree setups start=====
 nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 " =====NERDTree setups end=====
@@ -169,6 +166,7 @@ command! -bang -nargs=* Rg
   \   fzf#vim#with_preview(), <bang>0)
 
 nmap <C-p> :Files<CR>
+nmap <C-f> :Rg<CR>
 " =====fzf.vim setups end=====
 
 " =====Markdown Preview for (Neo)vim setups start=====
