@@ -69,7 +69,7 @@ augroup END
 
 " enable auto-saving, add CursorHoldI to make it work while insert mode is active
 set updatetime=100
-autocmd CursorHold * update
+autocmd CursorHold * silent! update
 
 " enable auto-sourcing vimrc, replace BufWritePost with CursorHold since it is not triggered by auto-saving
 autocmd! BufWritePost $MYVIMRC source $MYVIMRC | echom "Reloaded vimrc"
@@ -91,6 +91,16 @@ augroup netrw_mapping
 augroup END
 function! NetrwMapping()
   nnoremap <buffer> <C-l> <C-W>l
+endfunction
+
+" Resolve the issue that not able to navigating from a NERDtree menu 
+augroup nerdtree_mapping
+  autocmd!
+  autocmd filetype nerdtree call NerdtreeMapping()
+augroup END
+function! NerdtreeMapping()
+  nnoremap <buffer> <C-k> <C-W>k
+  nnoremap <buffer> <C-j> <C-W>j
 endfunction
 
 " swap grep with ack for :grep
