@@ -1,7 +1,6 @@
 " Use :help xxx to check how the details of xxx
 
 set nocompatible  " Make Vim not Vi-compatible and behave in a more useful way
-set encoding=utf-8
 
 " Disable arrow keys
 noremap <Left> <Nop>
@@ -45,7 +44,10 @@ let mapleader = ","
 
 " ========== mappings using <Leader> start ==========
 " open vimrc in a new tab
+nmap <leader>f :Rg<CR>
 nmap <leader>v :tabedit $MYVIMRC<CR>
+nmap <leader>x :xa<CR>
+
 " ========== mappings using <Leader> start ==========
 
 " Traverse Vim's buffer lists
@@ -149,9 +151,14 @@ let g:fzf_layout = {'window': {'width':1, 'height': 0.4, 'yoffset': 1, 'border':
 command! -bang -nargs=? -complete=dir Files
 			\ call fzf#vim#files(<q-args>,
                         \ {'window': {'width':1, 'height': 0.3, 'yoffset': 1, 'border': 'horizontal'},
-                        \ 'options': ['--preview-window=right,70%:hidden', '--bind=ctrl-/:toggle-preview', '--layout=default', '--info=inline']}, <bang>0)
+			\ 'options': ['--preview-window=right,70%:hidden', '--bind=ctrl-/:toggle-preview', '--layout=default', '--info=inline',
+		        \             '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
 nmap <C-p> :Files<CR>
-nmap <C-S-f> :Ag<CR>
 " =====fzf.vim setups end=====
 
 " =====Markdown Preview for (Neo)vim setups start=====
