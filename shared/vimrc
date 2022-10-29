@@ -166,7 +166,7 @@ command! -bang -nargs=* Rg
   \   fzf#vim#with_preview(), <bang>0)
 
 nmap <C-p> :Files<CR>
-nmap <C-f> :Rg<CR>
+nmap <leader>f :Rg<CR>
 " =====fzf.vim setups end=====
 
 " =====Markdown Preview for (Neo)vim setups start=====
