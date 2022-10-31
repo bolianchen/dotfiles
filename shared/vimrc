@@ -141,6 +141,8 @@ Plug 'slim-template/vim-slim' " syntax highlighting
 " status bar setup
 Plug 'vim-airline/vim-airline' 
 Plug 'vim-airline/vim-airline-themes' 
+Plug 'tpope/vim-commentary' 
+Plug 'airblade/vim-gitgutter' 
 call plug#end()
 " ===== Plugins setups end=====
 
@@ -184,3 +186,7 @@ set pastetoggle=<F10> " switch between paste and nopaste modes
 
 " set vim-airline theme
 let g:airline_theme='simple'
+
+" set vim-gitgutter
+let g:gitgutter_enabled = 0 " turn it off at startup
+nmap <leader>g :GitGutterToggle<CR>
