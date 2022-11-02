@@ -23,19 +23,19 @@ ln -s $ROOT_DIR/ubuntu/tmux.ubuntu.conf ~/.tmux.conf
 # link vim configs
 echo "Creating symlink to vim-related files"
 mkdir -p ~/.vim/after/ftplugin
-rm ~/.vim/vimrc
-rm ~/.vim/after/ftplugin/python.vim
-rm ~/.vim/after/ftplugin/java.vim
-rm ~/.vim/after/ftplugin/c.vim
-rm ~/.ideavimrc
-rm ~/.config/nvim/init.vim
+rm -f ~/.vim/vimrc
+rm -f ~/.vim/after/ftplugin/python.vim
+rm -f ~/.vim/after/ftplugin/java.vim
+rm -f ~/.vim/after/ftplugin/c.vim
+rm -f ~/.ideavimrc
+rm -f ~/.config/nvim/init.vim
 ln -s $SHARED_DIR/vimrc ~/.vim/vimrc
 ln -s $SHARED_DIR/python.vim ~/.vim/after/ftplugin/python.vim
 ln -s $SHARED_DIR/java.vim ~/.vim/after/ftplugin/java.vim
 ln -s $SHARED_DIR/c.vim ~/.vim/after/ftplugin/c.vim
 ln -s $SHARED_DIR/ideavimrc ~/.ideavimrc
+mkdir -p ~/.config/nvim
 ln -s $SHARED_DIR/init.vim ~/.config/nvim/init.vim
-ln -s $SHARED_DIR/init.vim  ~/.config/nvim/init.vim
 
 # link zsh configs
 echo "source ~/.dotfiles/shared/zshrc" >> ~/.zshrc 
