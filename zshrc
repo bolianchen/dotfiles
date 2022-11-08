@@ -1,7 +1,7 @@
 
 # Aliases Definition
-if [ -f ~/.dotfiles/shared/sh_aliases ]; then
-    . ~/.dotfiles/shared/sh_aliases
+if [ -f ~/.dotfiles/sh_aliases ]; then
+    . ~/.dotfiles/sh_aliases
 fi
 
 if [ "$(uname)" = "Darwin" ]; then
