@@ -185,7 +185,11 @@ set pastetoggle=<F10> " switch between paste and nopaste modes
 " ===== F Keys mapping ends =====
 
 " set vim-airline theme
-let g:airline_theme='simple'
+" raven, luna, badwolf have more distinctive inactive tabs
+let g:airline_theme='badwolf'
+" let g:airline_powerline_fonts = 1
+set t_Co=256
+let g:airline_extensions = ['branch']
 
 " set vim-gitgutter
 let g:gitgutter_enabled = 0 " turn it off at startup
