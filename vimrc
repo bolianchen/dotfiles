@@ -186,7 +186,7 @@ set pastetoggle=<F10> " switch between paste and nopaste modes
 
 " set vim-airline theme
 " raven, luna, badwolf have more distinctive inactive tabs
-let g:airline_theme='badwolf'
+let g:airline_theme='raven'
 " let g:airline_powerline_fonts = 1
 set t_Co=256
 let g:airline_extensions = ['branch']
