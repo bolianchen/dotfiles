@@ -70,6 +70,9 @@ augroup END
 set updatetime=100
 autocmd CursorHold * silent! update
 
+set autoread
+autocmd CursorHold * checktime
+
 " enable auto-sourcing vimrc, replace BufWritePost with CursorHold since it is not triggered by auto-saving
 autocmd! BufWritePost $MYVIMRC source $MYVIMRC | echom "Reloaded vimrc"
 
@@ -90,16 +93,6 @@ augroup netrw_mapping
 augroup END
 function! NetrwMapping()
   nnoremap <buffer> <C-l> <C-W>l
-endfunction
-
-" Resolve the issue that not able to navigating from a NERDtree menu 
-augroup nerdtree_mapping
-  autocmd!
-  autocmd filetype nerdtree call NerdtreeMapping()
-augroup END
-function! NerdtreeMapping()
-  nnoremap <buffer> <C-k> <C-W>k
-  nnoremap <buffer> <C-j> <C-W>j
 endfunction
 
 " swap grep with ack for :grep
@@ -128,7 +121,6 @@ call plug#begin()
 " enable fzf and automatically download the latest version of the binary
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'preservim/nerdtree'
 Plug 'iamcco/mathjax-support-for-mkdp'
 " manually execution of :call mkdp#util#install() to avoid post-update hook error is required
 " check https://github.com/iamcco/markdown-preview.nvim/issues/497
@@ -145,13 +137,6 @@ Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-gitgutter' 
 call plug#end()
 " ===== Plugins setups end=====
-
-" =====NERDTree setups start=====
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-" =====NERDTree setups end=====
 
 " =====fzf.vim setups start=====
 let g:fzf_preview_window = ['right,70%', 'ctrl-/']
