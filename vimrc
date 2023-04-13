@@ -12,6 +12,14 @@ inoremap <Right> <Nop>
 inoremap <Up> <Nop>
 inoremap <Down> <Nop>
 
+if has('nvim')
+  " Switching between terminal mode and normal mode
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-[> <C-\><C-n>
+  " Distinguishing the terminal cursor from normal cursor
+  highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+endif
+
 set hidden " Allow modified buffer to be hidden and not displayed
 set noswapfile " Not to create a swpfile for a new buffer 
 set backspace=start,eol,indent " Ensure backspace to delete everything in the insert mode including automatically inserted indentation...
@@ -135,6 +143,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
 Plug 'tpope/vim-commentary' 
 Plug 'airblade/vim-gitgutter' 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 " ===== Plugins setups end=====
 
