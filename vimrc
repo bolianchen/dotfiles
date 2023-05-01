@@ -143,9 +143,27 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
 Plug 'tpope/vim-commentary' 
 Plug 'airblade/vim-gitgutter' 
+Plug 'github/copilot.vim' 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'yaegassy/coc-pydocstring', {'do': 'yarn install --frozen-lockfile'}
+if has('nvim')
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+else
+  Plug 'gelguy/wilder.nvim'
+
+  " To use Python remote plugin features in Vim, can be skipped
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 call plug#end()
 " ===== Plugins setups end=====
+
 
 " =====fzf.vim setups start=====
 let g:fzf_preview_window = ['right,70%', 'ctrl-/']
@@ -188,3 +206,22 @@ let g:airline_extensions = ['branch']
 " set vim-gitgutter
 let g:gitgutter_enabled = 0 " turn it off at startup
 nmap <leader>g :GitGutterToggle<CR>
+
+" key mapping for coc-pydocstring
+nmap <silent> ga <Plug>(coc-codeaction-line)
+xmap <silent> ga <Plug>(coc-codeaction-selected)
+nmap <silent> gA <Plug>(coc-codeaction)
+
+" key bindings for gelguy/wilder.nvim
+call wilder#setup({'modes': [':', '/', '?']})
+
+call wilder#set_option('pipeline', [
+      \   wilder#branch(
+      \     wilder#cmdline_pipeline(),
+      \     wilder#search_pipeline(),
+      \   ),
+      \ ])
+
+call wilder#set_option('renderer', wilder#wildmenu_renderer({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ }))
