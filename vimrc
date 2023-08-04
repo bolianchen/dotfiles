@@ -63,6 +63,14 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
 
+" Insert blank line in normal mode
+nnoremap <silent> [<space> :pu! _<cr>:']+1<cr>
+nnoremap <silent> ]<space> :pu _<cr>:'[-1<cr>
+
+" copy the relative path of the filename to the unnamed and clipboard registers
+nmap cp :let @+ = expand("%:~:.")<CR>
+
+
 " Search for visually selected text
 " https://vim.fandom.com/wiki/Search_for_visually_selected_text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
@@ -102,6 +110,9 @@ augroup END
 function! NetrwMapping()
   nnoremap <buffer> <C-l> <C-W>l
 endfunction
+
+" Delete non-empty directories in netrw with prompts
+let g:netrw_localrmdir='rm -ri'
 
 " swap grep with ack for :grep
 set grepprg=ack\ --nogroup\ --column\ $*
@@ -225,3 +236,22 @@ call wilder#set_option('pipeline', [
 call wilder#set_option('renderer', wilder#wildmenu_renderer({
       \ 'highlighter': wilder#basic_highlighter(),
       \ }))
+
+
+function! FormatJson()
+  :%!jq .
+endfunction
+
+function! SuggestOneCharacter()
+    let suggestion = copilot#Accept("")
+    let bar = copilot#TextQueuedForInsertion()
+    return bar[0]
+endfunction
+
+function! SuggestOneWord()
+    let suggestion = copilot#Accept("")
+    let bar = copilot#TextQueuedForInsertion()
+    return split(bar, '[ .]\zs')[0]
+endfunction
+
+imap <script><expr> <M-left> SuggestOneCharacter()
