@@ -34,7 +34,8 @@ ln -s $ROOT_DIR/java.vim $VIM_DIR/after/ftplugin/java.vim
 ln -s $ROOT_DIR/c.vim $VIM_DIR/after/ftplugin/c.vim
 ln -s $ROOT_DIR/ideavimrc ~/.ideavimrc
 mkdir -p ~/.config/nvim
-ln -s $ROOT_DIR/init.vim ~/.config/nvim/init.vim
+ln -s $ROOT_DIR/init.vim ~/.config/nvim/_init.vim
+ln -s $ROOT_DIR/init.lua ~/.config/nvim/init.lua
 
 # link zsh configs
 echo "source $ROOT_DIR/zshrc" >> ~/.zshrc 
