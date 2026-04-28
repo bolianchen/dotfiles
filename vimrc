@@ -64,6 +64,7 @@ nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
 
 " Insert blank line in normal mode
+" https://stackoverflow.com/questions/6765211/vim-command-to-insert-blank-line-in-normal-mode
 nnoremap <silent> [<space> :pu! _<cr>:']+1<cr>
 nnoremap <silent> ]<space> :pu _<cr>:'[-1<cr>
 
@@ -149,6 +150,7 @@ Plug 'tpope/vim-surround'
 Plug 'preservim/tagbar'
 Plug 'tpope/vim-fugitive'
 Plug 'slim-template/vim-slim' " syntax highlighting
+Plug 'vim-python/python-syntax'
 " status bar setup
 Plug 'vim-airline/vim-airline' 
 Plug 'vim-airline/vim-airline-themes' 
@@ -190,13 +192,18 @@ command! -bang -nargs=* Rg
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
+let g:fzf_action = {
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit' }
+
 nmap <C-p> :Files<CR>
 nmap <leader>f :Rg<CR>
 " =====fzf.vim setups end=====
 
 " =====Markdown Preview for (Neo)vim setups start=====
-nmap <C-s> <Plug>MarkdownPreview
-nmap <M-s> <Plug>MarkdownPreviewStop
+nmap <C-s> <Plug>MarkdownPreview " Control + s to start preview
+nmap <M-s> <Plug>MarkdownPreviewStop " Option + s to stop preview
 " dark or light
 let g:mkdp_theme = 'dark'
 " =====Markdown Preview for (Neo)vim setups end=====
@@ -204,7 +211,12 @@ let g:mkdp_theme = 'dark'
 " ===== F Keys mapping starts =====
 nmap <F5> :!ctags -R<CR> " execute ctags
 nmap <F8> :TagbarToggle<CR> " Toggle the Tagbar window
-set pastetoggle=<F10> " switch between paste and nopaste modes
+if has('nvim')
+  nnoremap <silent> <f10> :set paste!<cr>
+  inoremap <silent> <f10> <esc>:set paste!<cr>i
+else
+  set pastetoggle=<F10> " switch between paste and nopaste modes
+endif
 " ===== F Keys mapping ends =====
 
 " set vim-airline theme
